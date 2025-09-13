@@ -3,10 +3,26 @@ import { useState } from 'react'
 const Anecdote = (props) => {
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <h2>{props.anecdote}</h2>
       <h4>has {props.votes} votes</h4>
     </div>
   )
+}
+
+const AnecdoteWithMostVotes = (props) => {
+
+  if (props.mostVotes !== 0) {
+    return (
+      <div>
+        <h1>Anecdote with the most votes</h1>
+        <h2>{props.anecdoteWithMostVotes}</h2>
+        <h4>has {props.mostVotes} votes</h4>
+      </div>
+    )
+  }
+
+  return null
 }
 
 const Button = (props) => {
@@ -47,11 +63,14 @@ const App = () => {
     setVotes(copiedVotes)
   }
 
+  const mostSelectedIndex = votes.indexOf(Math.max(...votes))
+
   return (
     <div>
       <Anecdote anecdote={anecdotes[selected]} votes={votes[selected]} />
       <Button text="vote" onClick={handleVote} />
       <Button text="next anecdote" onClick={handleNextAnecdote} />
+      <AnecdoteWithMostVotes anecdoteWithMostVotes={anecdotes[mostSelectedIndex]} mostVotes={votes[mostSelectedIndex]} />
     </div>
   )
 }
